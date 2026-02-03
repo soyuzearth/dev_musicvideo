@@ -1,16 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useSearchParams } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 
 const ProjectDetail = () => {
     const { id } = useParams();
+    const [searchParams, setSearchParams] = useSearchParams();
     const [project, setProject] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [isPurchased, setIsPurchased] = useState(false);
 
     useEffect(() => {
+        // Check LocalStorage first
+        const purchasedState = localStorage.getItem(`purchased_${id}`);
+        if (purchasedState === 'true') {
+            setIsPurchased(true);
+        }
+
+        // Check URL for payment success
+        if (searchParams.get('payment') === 'success') {
+            localStorage.setItem(`purchased_${id}`, 'true');
+            setIsPurchased(true);
+            // Optional: Clean up URL
+            setSearchParams({}, { replace: true });
+        }
+
         fetchProject();
         window.scrollTo(0, 0);
-    }, [id]);
+    }, [id, searchParams]);
 
     async function fetchProject() {
         try {
@@ -97,8 +113,8 @@ const ProjectDetail = () => {
                         ></iframe>
                     </div>
 
-                    {project.purchase_url && (
-                        <div className="flex justify-center">
+                    <div className="flex flex-col md:flex-row justify-center items-center gap-4">
+                        {project.purchase_url && (
                             <a
                                 href={project.purchase_url}
                                 target="_blank"
@@ -111,8 +127,36 @@ const ProjectDetail = () => {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                 </svg>
                             </a>
-                        </div>
-                    )}
+                        )}
+
+                        {isPurchased && project.pdf_url ? (
+                            <a
+                                href={project.pdf_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-green-600 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600 hover:bg-green-700 active:scale-95 shadow-lg hover:shadow-xl"
+                            >
+                                <span className="mr-2">⬇️</span>
+                                PDF 다운로드
+                                <svg className="ml-2 w-5 h-5 group-hover:translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                </svg>
+                            </a>
+                        ) : project.payapp_url ? (
+                            <a
+                                href={project.payapp_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-blue-600 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 hover:bg-blue-700 active:scale-95 shadow-lg hover:shadow-xl"
+                            >
+                                <span className="mr-2">💳</span>
+                                PDF 전자책 구매하기
+                                <svg className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                            </a>
+                        ) : null}
+                    </div>
                 </div>
             );
         }
