@@ -9,24 +9,75 @@ const ProjectDetail = () => {
     const [loading, setLoading] = useState(true);
     const [isPurchased, setIsPurchased] = useState(false);
 
+    // 1. Handle Popup Payment Check & Storage Sync
     useEffect(() => {
-        // Check LocalStorage first
-        const purchasedState = localStorage.getItem(`purchased_${id}`);
-        if (purchasedState === 'true') {
-            setIsPurchased(true);
-        }
+        // Check LocalStorage on mount
+        const checkPurchaseStatus = () => {
+            const purchasedState = localStorage.getItem(`purchased_${id}`);
+            if (purchasedState === 'true') {
+                setIsPurchased(true);
+            }
+        };
+        checkPurchaseStatus();
 
-        // Check URL for payment success
+        // Handle "Return URL" logic (Popup Mode)
         if (searchParams.get('payment') === 'success') {
             localStorage.setItem(`purchased_${id}`, 'true');
             setIsPurchased(true);
-            // Optional: Clean up URL
-            setSearchParams({}, { replace: true });
+
+            // If opened as a popup, notify opener and close self
+            if (window.opener) {
+                // Trigger message for same-origin or cross-origin (if configured)
+                window.opener.postMessage({ type: 'PAYMENT_COMPLETE', projectId: id }, '*');
+
+                // Show success UI briefly then close
+                document.body.innerHTML = `
+                    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;">
+                        <h2 style="color:#22c55e;">결제가 완료되었습니다!</h2>
+                        <p>창이 3초 뒤에 자동으로 닫힙니다.</p>
+                        <button onclick="window.close()" style="padding:10px 20px;background:#ddd;border:none;border-radius:5px;cursor:pointer;">즉시 닫기</button>
+                    </div>
+                `;
+                setTimeout(() => window.close(), 3000);
+                // Stop further react rendering for this popup instance
+                return;
+            } else {
+                // Fallback: If not a popup, clean URL
+                setSearchParams({}, { replace: true });
+            }
         }
 
+        // Listen for changes from the popup
+        const handleStorageChange = (e) => {
+            if (e.key === `purchased_${id}` && e.newValue === 'true') {
+                setIsPurchased(true);
+            }
+        };
+
+        const handleMessage = (e) => {
+            if (e.data?.type === 'PAYMENT_COMPLETE' && e.data?.projectId === id) {
+                localStorage.setItem(`purchased_${id}`, 'true');
+                setIsPurchased(true);
+            }
+        };
+
+        const handleFocus = () => checkPurchaseStatus();
+
+        window.addEventListener('storage', handleStorageChange);
+        window.addEventListener('message', handleMessage);
+        window.addEventListener('focus', handleFocus);
+
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+            window.removeEventListener('message', handleMessage);
+            window.removeEventListener('focus', handleFocus);
+        };
+    }, [id, searchParams]);
+
+    useEffect(() => {
         fetchProject();
         window.scrollTo(0, 0);
-    }, [id, searchParams]);
+    }, [id]);
 
     async function fetchProject() {
         try {
@@ -45,6 +96,24 @@ const ProjectDetail = () => {
             setLoading(false);
         }
     }
+
+    const handlePurchaseClick = (e) => {
+        e.preventDefault();
+        if (!project?.payapp_url) return;
+
+        const width = 800;
+        const height = 900;
+        const left = window.screen.width / 2 - width / 2;
+        const top = window.screen.height / 2 - height / 2;
+
+        window.open(
+            project.payapp_url,
+            'PayAppPayment',
+            `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes,status=yes`
+        );
+
+        alert('결제창이 열렸습니다.\n결제가 완료되면 이 화면이 자동으로 다운로드 버튼으로 바뀝니다.\n(팝업이 차단된 경우 팝업을 허용해주세요)');
+    };
 
     const renderContent = () => {
         if (!project) return null;
@@ -143,18 +212,16 @@ const ProjectDetail = () => {
                                 </svg>
                             </a>
                         ) : project.payapp_url ? (
-                            <a
-                                href={project.payapp_url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-blue-600 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 hover:bg-blue-700 active:scale-95 shadow-lg hover:shadow-xl"
+                            <button
+                                onClick={handlePurchaseClick}
+                                className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-blue-600 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 hover:bg-blue-700 active:scale-95 shadow-lg hover:shadow-xl cursor-pointer"
                             >
                                 <span className="mr-2">💳</span>
                                 PDF 전자책 구매하기
                                 <svg className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                                 </svg>
-                            </a>
+                            </button>
                         ) : null}
                     </div>
                 </div>
