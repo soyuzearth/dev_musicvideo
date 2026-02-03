@@ -62,43 +62,46 @@ const PortfolioGrid = () => {
 
     if (loading) {
         return (
-            <div className="text-center py-20">
-                <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                <p className="text-gray-500">콘텐츠를 불러오는 중입니다...</p>
+            <div className="flex items-center justify-center min-h-[40vh]">
+                <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
             </div>
         );
     }
 
     return (
-        <section className="container-main pb-24 space-y-12">
-            {/* Category Tabs */}
-            <div className="flex flex-wrap items-center justify-center gap-4">
-                {categories.map((category) => (
-                    <button
-                        key={category.id}
-                        onClick={() => setSelectedCategoryId(category.id)}
-                        className={`
-              px-6 py-2.5 rounded-full text-base font-medium transition-all duration-300
-              ${selectedCategoryId === category.id
-                                ? 'bg-primary text-white shadow-md transform scale-105'
-                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900'}
-            `}
-                    >
-                        {category.name}
-                    </button>
-                ))}
+        <section className="container-main pb-32 space-y-16">
+            {/* Glass Category Tabs */}
+            <div className="sticky top-20 z-30 flex flex-wrap items-center justify-center gap-3 py-4">
+                <div className="glass px-2 py-2 rounded-full flex flex-wrap justify-center gap-2">
+                    {categories.map((category) => (
+                        <button
+                            key={category.id}
+                            onClick={() => setSelectedCategoryId(category.id)}
+                            className={`
+                  px-6 py-2.5 rounded-full text-base font-medium transition-all duration-300 relative
+                  ${selectedCategoryId === category.id
+                                    ? 'bg-primary text-white shadow-lg'
+                                    : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'}
+                `}
+                        >
+                            {category.name}
+                        </button>
+                    ))}
+                </div>
             </div>
 
             {/* Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-                {filteredProjects.map((project) => (
-                    <ProjectCard key={project.id} project={project} />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                {filteredProjects.map((project, index) => (
+                    <div key={project.id} className="animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
+                        <ProjectCard project={project} />
+                    </div>
                 ))}
             </div>
 
             {/* Empty State */}
             {filteredProjects.length === 0 && (
-                <div className="text-center py-20 bg-gray-50 rounded-2xl">
+                <div className="text-center py-20 bg-gray-50 rounded-3xl border border-gray-100">
                     <p className="text-gray-500 text-lg">이 카테고리에는 아직 등록된 프로젝트가 없습니다.</p>
                 </div>
             )}
