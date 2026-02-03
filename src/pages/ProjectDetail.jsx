@@ -8,6 +8,7 @@ const ProjectDetail = () => {
     const [project, setProject] = useState(null);
     const [loading, setLoading] = useState(true);
     const [isPurchased, setIsPurchased] = useState(false);
+    const [showManualCheck, setShowManualCheck] = useState(false);
 
     // 1. Handle Popup Payment Check & Storage Sync
     useEffect(() => {
@@ -97,6 +98,14 @@ const ProjectDetail = () => {
         }
     }
 
+    const handleManualConfirm = () => {
+        if (window.confirm('결제를 완료하셨나요?\\n확인을 누르면 다운로드 버튼이 활성화됩니다.')) {
+            localStorage.setItem(`purchased_${id}`, 'true');
+            setIsPurchased(true);
+            setShowManualCheck(false);
+        }
+    };
+
     const handlePurchaseClick = (e) => {
         e.preventDefault();
         if (!project?.payapp_url) return;
@@ -112,7 +121,8 @@ const ProjectDetail = () => {
             `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes,status=yes`
         );
 
-        alert('결제창이 열렸습니다.\n결제가 완료되면 이 화면이 자동으로 다운로드 버튼으로 바뀝니다.\n(팝업이 차단된 경우 팝업을 허용해주세요)');
+        setShowManualCheck(true);
+        alert('결제창이 열렸습니다.\\n결제가 완료되면 이 화면이 자동으로 다운로드 버튼으로 바뀝니다.\\n(만약 자동으로 바뀌지 않으면, 새로 생긴 "결제 완료 확인" 버튼을 눌러주세요)');
     };
 
     const renderContent = () => {
@@ -212,16 +222,26 @@ const ProjectDetail = () => {
                                 </svg>
                             </a>
                         ) : project.payapp_url ? (
-                            <button
-                                onClick={handlePurchaseClick}
-                                className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-blue-600 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 hover:bg-blue-700 active:scale-95 shadow-lg hover:shadow-xl cursor-pointer"
-                            >
-                                <span className="mr-2">💳</span>
-                                PDF 전자책 구매하기
-                                <svg className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                                </svg>
-                            </button>
+                            <div className="flex flex-col items-center gap-2">
+                                <button
+                                    onClick={handlePurchaseClick}
+                                    className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-blue-600 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 hover:bg-blue-700 active:scale-95 shadow-lg hover:shadow-xl cursor-pointer"
+                                >
+                                    <span className="mr-2">💳</span>
+                                    PDF 전자책 구매하기
+                                    <svg className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    </svg>
+                                </button>
+                                {showManualCheck && (
+                                    <button
+                                        onClick={handleManualConfirm}
+                                        className="mt-2 text-sm text-gray-500 underline hover:text-gray-800 cursor-pointer"
+                                    >
+                                        결제를 완료했는데 다운로드가 안 되나요? (수동 확인)
+                                    </button>
+                                )}
+                            </div>
                         ) : null}
                     </div>
                 </div>
