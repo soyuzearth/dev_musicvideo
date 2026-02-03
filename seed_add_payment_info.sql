@@ -18,7 +18,7 @@ BEGIN
     UPDATE projects 
     SET 
         pdf_url = 'https://udlyikebeopjnewoydbg.supabase.co/storage/v1/object/public/ebooks/ebooks_mijin_firemonster.pdf',
-        payapp_url = 'https://payapp.kr/YOUR_PAYMENT_LINK_HERE' -- PLACEHOLDER
+        payapp_url = 'https://www.payapp.kr/L/z47LU4'
     WHERE 
         title = '용감한 진우와 불꽃 괴물' AND author = '김미진';
 
