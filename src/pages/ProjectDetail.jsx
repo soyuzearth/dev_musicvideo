@@ -106,6 +106,29 @@ const ProjectDetail = () => {
         }
     };
 
+    const handleDownload = async () => {
+        try {
+            // Extract filename from URL (assumes standard Supabase URL structure)
+            // e.g., .../ebooks/filename.pdf -> filename.pdf
+            const fileName = project.pdf_url.split('/').pop();
+
+            const { data, error } = await supabase
+                .storage
+                .from('ebooks')
+                .createSignedUrl(fileName, 300); // 300 seconds = 5 minutes
+
+            if (error) throw error;
+
+            if (data?.signedUrl) {
+                // Open signed URL in new window
+                window.open(data.signedUrl, '_blank');
+            }
+        } catch (error) {
+            console.error('Error downloading file:', error);
+            alert('다운로드 링크 생성 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        }
+    };
+
     const handlePurchaseClick = (e) => {
         e.preventDefault();
         if (!project?.payapp_url) return;
@@ -209,18 +232,16 @@ const ProjectDetail = () => {
                         )}
 
                         {isPurchased && project.pdf_url ? (
-                            <a
-                                href={project.pdf_url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-green-600 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600 hover:bg-green-700 active:scale-95 shadow-lg hover:shadow-xl"
+                            <button
+                                onClick={handleDownload}
+                                className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-green-600 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600 hover:bg-green-700 active:scale-95 shadow-lg hover:shadow-xl cursor-pointer"
                             >
                                 <span className="mr-2">⬇️</span>
-                                PDF 다운로드
+                                PDF 다운로드 (5분간 유효)
                                 <svg className="ml-2 w-5 h-5 group-hover:translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                 </svg>
-                            </a>
+                            </button>
                         ) : project.payapp_url ? (
                             <div className="flex flex-col items-center gap-2">
                                 <button
