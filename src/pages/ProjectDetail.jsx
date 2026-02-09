@@ -9,27 +9,49 @@ const ProjectDetail = () => {
     const [loading, setLoading] = useState(true);
     const [isPurchased, setIsPurchased] = useState(false);
     const [showManualCheck, setShowManualCheck] = useState(false);
+    const [timeLeft, setTimeLeft] = useState(0);
 
     // 1. Handle Popup Payment Check & Storage Sync
     useEffect(() => {
         // Check LocalStorage on mount
         const checkPurchaseStatus = () => {
             const purchasedState = localStorage.getItem(`purchased_${id}`);
-            if (purchasedState === 'true') {
+            const purchasedAt = localStorage.getItem(`purchased_at_${id}`);
+
+            if (purchasedState === 'true' && purchasedAt) {
+                const elapsed = Math.floor((Date.now() - parseInt(purchasedAt)) / 1000);
+                const remaining = 60 - elapsed;
+
+                if (remaining > 0) {
+                    setIsPurchased(true);
+                    setTimeLeft(remaining);
+                } else {
+                    setIsPurchased(false);
+                    setTimeLeft(0);
+                }
+            } else if (purchasedState === 'true') {
+                // Migration: if purchased but no timestamp, set it now (or just hide)
+                // Let's set it now to give them 1 minute from this view
+                const now = Date.now().toString();
+                localStorage.setItem(`purchased_at_${id}`, now);
                 setIsPurchased(true);
+                setTimeLeft(60);
             }
         };
         checkPurchaseStatus();
 
         // Handle "Return URL" logic (Popup Mode)
         if (searchParams.get('payment') === 'success') {
+            const now = Date.now().toString();
             localStorage.setItem(`purchased_${id}`, 'true');
+            localStorage.setItem(`purchased_at_${id}`, now);
             setIsPurchased(true);
+            setTimeLeft(60);
 
             // If opened as a popup, notify opener and close self
             if (window.opener) {
                 // Trigger message for same-origin or cross-origin (if configured)
-                window.opener.postMessage({ type: 'PAYMENT_COMPLETE', projectId: id }, '*');
+                window.opener.postMessage({ type: 'PAYMENT_COMPLETE', projectId: id, purchasedAt: now }, '*');
 
                 // Show success UI briefly then close
                 document.body.innerHTML = `
@@ -57,13 +79,15 @@ const ProjectDetail = () => {
 
         const handleMessage = (e) => {
             if (e.data?.type === 'PAYMENT_COMPLETE' && e.data?.projectId === id) {
+                const now = e.data.purchasedAt || Date.now().toString();
                 localStorage.setItem(`purchased_${id}`, 'true');
+                localStorage.setItem(`purchased_at_${id}`, now);
                 setIsPurchased(true);
+                setTimeLeft(60);
             }
         };
 
         const handleFocus = () => checkPurchaseStatus();
-
         window.addEventListener('storage', handleStorageChange);
         window.addEventListener('message', handleMessage);
         window.addEventListener('focus', handleFocus);
@@ -74,6 +98,23 @@ const ProjectDetail = () => {
             window.removeEventListener('focus', handleFocus);
         };
     }, [id, searchParams]);
+
+    // 2. Timer Logic (Separate Effect to handle state changes correctly)
+    useEffect(() => {
+        if (!isPurchased || timeLeft <= 0) return;
+
+        const timer = setInterval(() => {
+            setTimeLeft(prev => {
+                if (prev <= 1) {
+                    setIsPurchased(false);
+                    return 0;
+                }
+                return prev - 1;
+            });
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, [isPurchased, timeLeft > 0]);
 
     useEffect(() => {
         fetchProject();
@@ -99,9 +140,12 @@ const ProjectDetail = () => {
     }
 
     const handleManualConfirm = () => {
-        if (window.confirm('결제를 완료하셨나요?\\n확인을 누르면 다운로드 버튼이 활성화됩니다.')) {
+        if (window.confirm('결제를 완료하셨나요?\n확인을 누르면 1분간 다운로드 버튼이 활성화됩니다.')) {
+            const now = Date.now().toString();
             localStorage.setItem(`purchased_${id}`, 'true');
+            localStorage.setItem(`purchased_at_${id}`, now);
             setIsPurchased(true);
+            setTimeLeft(60);
             setShowManualCheck(false);
         }
     };
@@ -115,7 +159,7 @@ const ProjectDetail = () => {
             const { data, error } = await supabase
                 .storage
                 .from('ebooks')
-                .createSignedUrl(fileName, 300); // 300 seconds = 5 minutes
+                .createSignedUrl(fileName, 60); // 60 seconds = 1 minute
 
             if (error) throw error;
 
@@ -234,13 +278,18 @@ const ProjectDetail = () => {
                         {isPurchased && project.pdf_url ? (
                             <button
                                 onClick={handleDownload}
-                                className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-green-600 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600 hover:bg-green-700 active:scale-95 shadow-lg hover:shadow-xl cursor-pointer"
+                                className="group relative inline-flex flex-col items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-green-600 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600 hover:bg-green-700 active:scale-95 shadow-lg hover:shadow-xl cursor-pointer"
                             >
-                                <span className="mr-2">⬇️</span>
-                                PDF 다운로드 (5분간 유효)
-                                <svg className="ml-2 w-5 h-5 group-hover:translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                </svg>
+                                <div className="flex items-center">
+                                    <span className="mr-2">⬇️</span>
+                                    PDF 다운로드
+                                    <svg className="ml-2 w-5 h-5 group-hover:translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                    </svg>
+                                </div>
+                                <span className="text-xs font-normal opacity-80 mt-1">
+                                    {timeLeft}초 뒤에 링크가 만료됩니다
+                                </span>
                             </button>
                         ) : project.payapp_url ? (
                             <div className="flex flex-col items-center gap-2">
