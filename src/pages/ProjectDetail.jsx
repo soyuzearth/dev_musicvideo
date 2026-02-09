@@ -245,14 +245,19 @@ const ProjectDetail = () => {
         }
 
         const isHeyzine = project.resource_type === 'heyzine' || (project.resource_url && project.resource_url.includes('heyzine.com'));
+        const isPdf = project.resource_type === 'pdf' || (project.resource_url && project.resource_url.toLowerCase().endsWith('.pdf'));
 
-        if (isHeyzine) {
+        if (isHeyzine || isPdf) {
+            const previewUrl = isPdf
+                ? `https://docs.google.com/viewer?url=${encodeURIComponent(project.resource_url)}&embedded=true`
+                : project.resource_url;
+
             return (
                 <div className="space-y-6">
                     <div className="max-w-4xl mx-auto w-full aspect-[16/10] rounded-2xl overflow-hidden shadow-lg bg-gray-100 relative">
                         <iframe
                             className="w-full h-full border-none"
-                            src={project.resource_url}
+                            src={previewUrl}
                             title={project.title}
                             allowFullScreen="allowfullscreen"
                             allow="fullscreen"
