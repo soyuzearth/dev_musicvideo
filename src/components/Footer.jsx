@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Footer = () => {
+const Footer = ({ onContactClick }) => {
     return (
         <footer className="bg-gray-50 border-t border-gray-100 py-16">
             <div className="container-main flex flex-col items-center justify-center text-center space-y-8">
@@ -14,12 +14,12 @@ const Footer = () => {
                     수강생들의 디지털 창작 경험을 돕습니다.
                 </p>
 
-                <a
-                    href="mailto:contact@example.com"
+                <button
+                    onClick={onContactClick}
                     className="inline-block bg-white text-gray-900 border border-gray-200 px-8 py-3 rounded-full font-semibold hover:border-primary hover:text-primary hover:bg-gray-50 transition-all duration-300 shadow-sm"
                 >
                     강의 섭외 문의하기
-                </a>
+                </button>
 
                 <p className="text-sm text-gray-400 mt-12">
                     &copy; {new Date().getFullYear()} Digital Life Coaching Center. All rights reserved.
