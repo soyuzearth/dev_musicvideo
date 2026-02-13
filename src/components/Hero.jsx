@@ -11,10 +11,12 @@ const Hero = () => {
             <div className="relative glass p-10 sm:p-14 rounded-3xl max-w-4xl mx-4 text-center space-y-8 animate-fade-in-up">
                 <h2 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-gray-900 leading-tight tracking-tight">
                     <span className="block mb-2">신나는 도전,</span>
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-600">
-                        내가 주도하는
-                    </span>{' '}
-                    디지털 라이프
+                    <span className="block whitespace-nowrap">
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-600">
+                            내가 주도하는
+                        </span>{' '}
+                        디지털 라이프
+                    </span>
                 </h2>
                 <p className="text-xl sm:text-2xl text-gray-600 font-medium leading-relaxed max-w-2xl mx-auto">
                     초등 AI 뮤직비디오 만들기 프로젝트<br />
