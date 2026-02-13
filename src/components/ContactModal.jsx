@@ -12,9 +12,8 @@ const ContactModal = ({ isOpen, onClose }) => {
                 className="glass w-full max-w-md rounded-3xl p-8 text-center space-y-6 shadow-2xl animate-scale-in"
                 onClick={(e) => e.stopPropagation()}
             >
-                <div className="space-y-2">
+                <div className="pt-2">
                     <p className="text-primary font-bold tracking-wider text-sm uppercase">Contact Information</p>
-                    <h2 className="text-2xl font-bold text-gray-900">강남 서호와 숲 속의 말</h2>
                 </div>
 
                 <div className="space-y-4 py-4 border-y border-gray-100/50">
