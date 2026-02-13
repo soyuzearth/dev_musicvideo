@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const ProjectCard = ({ project }) => {
+const ProjectCard = ({ project, categoryName }) => {
     // Determine Thumbnail URL
     let thumbnailUrl = project.thumbnail_url;
 
@@ -14,18 +14,19 @@ const ProjectCard = ({ project }) => {
     }
 
     const isYouTube = project.resource_type === 'youtube';
-    const isAiStorybook = project.category_id === 2;
+    const isBookCategory = categoryName === 'AI 동화책' || categoryName === '시니어 AI 수업';
 
     return (
         <Link
             to={`/project/${project.id}`}
             className="group block rounded-2xl p-3 bg-white hover:bg-white/80 transition-all duration-500 hover:shadow-xl hover:-translate-y-1"
         >
-            <div className={`relative ${isAiStorybook ? 'aspect-[3/4]' : 'aspect-video'} rounded-xl overflow-hidden shadow-sm group-hover:shadow-md transition-all duration-500`}>
+            <div className={`relative ${isBookCategory ? 'w-full' : 'aspect-video'} rounded-xl overflow-hidden shadow-sm group-hover:shadow-md transition-all duration-500 bg-gray-50 flex items-center justify-center`}>
                 <img
                     src={thumbnailUrl}
                     alt={project.title}
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out will-change-transform"
+                    className={`transform group-hover:scale-110 transition-transform duration-700 ease-out path-change-transform ${isBookCategory ? 'w-full h-auto block' : 'w-full h-full object-cover'}`}
+                    style={isBookCategory ? { aspectRatio: 'auto' } : {}}
                     onError={(e) => {
                         if (isYouTube) {
                             e.target.onerror = null;
