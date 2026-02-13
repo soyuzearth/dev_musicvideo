@@ -92,11 +92,14 @@ const PortfolioGrid = () => {
 
             {/* Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                {filteredProjects.map((project, index) => (
-                    <div key={project.id} className="animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
-                        <ProjectCard project={project} />
-                    </div>
-                ))}
+                {filteredProjects.map((project, index) => {
+                    const category = categories.find(c => c.id === project.category_id);
+                    return (
+                        <div key={project.id} className="animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
+                            <ProjectCard project={project} categoryName={category?.name} />
+                        </div>
+                    );
+                })}
             </div>
 
             {/* Empty State */}

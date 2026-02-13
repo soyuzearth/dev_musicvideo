@@ -1,7 +1,7 @@
 # Walkthrough - Adding Senior AI Class Canva Links
 
 ## History
-- **2026-0214**: Initial integration of 16 projects, Supabase Storage setup, thumbnail aspect ratio fix, and title cleanup.
+- **2026-0214**: Initial integration of 16 projects, Supabase Storage setup, thumbnail aspect ratio fix, title cleanup, contact modal addition, and hero slogan line break adjustment.
 
 I have successfully prepared the data and updated the frontend to display the new '시니어 AI 수업' projects.
 
