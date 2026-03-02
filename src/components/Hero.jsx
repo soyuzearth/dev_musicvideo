@@ -30,10 +30,7 @@ const Hero = () => {
 
                 {/* Description */}
                 <div className="space-y-3">
-                    <p className="text-xl sm:text-2xl text-gray-700 font-semibold tracking-tight">
-                        학생, 교사, 시니어까지
-                    </p>
-                    <p className="text-lg sm:text-xl text-gray-500 font-medium leading-relaxed max-w-2xl mx-auto">
+                    <p className="text-xl sm:text-xl text-gray-500 font-medium leading-relaxed max-w-2xl mx-auto">
                         각자의 목적에 맞는 <span className="text-gray-900 border-b-2 border-primary/30">실전 AI 프로젝트 교육</span>
                     </p>
                 </div>
