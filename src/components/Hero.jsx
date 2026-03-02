@@ -16,11 +16,11 @@ const Hero = () => {
                             Applied AI Workshop
                         </p>
                         <h2 className="text-xl sm:text-2xl md:text-3xl font-medium text-gray-600 tracking-tight">
-                            AI로 결과를 만드는 실습 중심 프로젝트 교육
+                            AI 실습 중심 프로젝트 교육
                         </h2>
                         <h1 className="text-3xl sm:text-4xl md:text-5xl font-[900] text-gray-900 leading-[1.2] tracking-tight">
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-600 to-indigo-600">
-                                조직과 개인의 AI 활용 역량을 높이는<br className="hidden md:block" /> 워크숍 프로그램
+                                조직과 개인의 AI 역량 강화 워크숍
                             </span>
                         </h1>
                     </div>
