@@ -32,11 +32,14 @@ BEGIN
   (v_cat_id, '홍이글의 골프 어택', '✅ AI 숏폼 영상 제작, 김햄찌 따라하기', 'youtube', 'j-aiGKQzwcM', now() - interval '5 seconds'),
   (v_cat_id, '토깽이 츄의 쇼핑 대참사', '✅ AI 숏폼 영상 제작, 김햄찌 따라하기', 'youtube', 'cvBjU9MBv84', now() - interval '4 seconds');
 
-  -- 4. Theme 2: ✅ 초등 AI 뮤직비디오 (3 videos)
+  -- 4. Theme 2: ✅ 초등 AI 뮤직비디오 (6 videos)
   INSERT INTO projects (category_id, title, description, resource_type, resource_url, created_at) VALUES
-  (v_cat_id, '꿈꾸는 우주 비행사 (AI Generated)', '✅ 초등 AI 뮤직비디오', 'youtube', 'dQw4w9WgXcQ', now() - interval '3 seconds'),
-  (v_cat_id, '미래 도시의 하루', '✅ 초등 AI 뮤직비디오', 'youtube', 'LXb3EKWsInQ', now() - interval '2 seconds'),
-  (v_cat_id, '로봇 친구와 함께', '✅ 초등 AI 뮤직비디오', 'youtube', 'ysz5S6P_z-E', now() - interval '1 second');
+  (v_cat_id, '초등 AI 뮤직비디오 프로젝트 01', '✅ 초등 AI 뮤직비디오', 'youtube', 'w7DYBR60rJQ', now() - interval '6 seconds'),
+  (v_cat_id, '초등 AI 뮤직비디오 프로젝트 02', '✅ 초등 AI 뮤직비디오', 'youtube', 'oCV0jb6Doiw', now() - interval '5 seconds'),
+  (v_cat_id, '초등 AI 뮤직비디오 프로젝트 03', '✅ 초등 AI 뮤직비디오', 'youtube', 'ygyAOjJjcxw', now() - interval '4 seconds'),
+  (v_cat_id, '초등 AI 뮤직비디오 프로젝트 04', '✅ 초등 AI 뮤직비디오', 'youtube', '0tkeY5Puh48', now() - interval '3 seconds'),
+  (v_cat_id, '초등 AI 뮤직비디오 프로젝트 05', '✅ 초등 AI 뮤직비디오', 'youtube', '9kQ7WlCnasA', now() - interval '2 seconds'),
+  (v_cat_id, '초등 AI 뮤직비디오 프로젝트 06', '✅ 초등 AI 뮤직비디오', 'youtube', 'JZYbBjx5Bz4', now() - interval '1 second');
 
   -- Note: Theme 3 '초등 북트레일러 제작' is mentioned as a future/planned topic.
 

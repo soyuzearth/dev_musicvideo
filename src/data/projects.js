@@ -38,22 +38,43 @@ export const projects = [
   {
     id: 1,
     category: 'video-creation',
-    title: "꿈꾸는 우주 비행사 (AI Generated)",
-    youtubeId: "dQw4w9WgXcQ",
+    title: "초등 AI 뮤직비디오 프로젝트 01",
+    youtubeId: "w7DYBR60rJQ",
     description: "✅ 초등 AI 뮤직비디오"
   },
   {
     id: 2,
     category: 'video-creation',
-    title: "미래 도시의 하루",
-    youtubeId: "LXb3EKWsInQ",
+    title: "초등 AI 뮤직비디오 프로젝트 02",
+    youtubeId: "oCV0jb6Doiw",
     description: "✅ 초등 AI 뮤직비디오"
   },
   {
     id: 3,
     category: 'video-creation',
-    title: "로봇 친구와 함께",
-    youtubeId: "ysz5S6P_z-E",
+    title: "초등 AI 뮤직비디오 프로젝트 03",
+    youtubeId: "ygyAOjJjcxw",
+    description: "✅ 초등 AI 뮤직비디오"
+  },
+  {
+    id: 4,
+    category: 'video-creation',
+    title: "초등 AI 뮤직비디오 프로젝트 04",
+    youtubeId: "0tkeY5Puh48",
+    description: "✅ 초등 AI 뮤직비디오"
+  },
+  {
+    id: 5,
+    category: 'video-creation',
+    title: "초등 AI 뮤직비디오 프로젝트 05",
+    youtubeId: "9kQ7WlCnasA",
+    description: "✅ 초등 AI 뮤직비디오"
+  },
+  {
+    id: 6,
+    category: 'video-creation',
+    title: "초등 AI 뮤직비디오 프로젝트 06",
+    youtubeId: "JZYbBjx5Bz4",
     description: "✅ 초등 AI 뮤직비디오"
   },
 
