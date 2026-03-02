@@ -91,16 +91,54 @@ const PortfolioGrid = () => {
             </div>
 
             {/* Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                {filteredProjects.map((project, index) => {
-                    const category = categories.find(c => c.id === project.category_id);
-                    return (
-                        <div key={project.id} className="animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
-                            <ProjectCard project={project} categoryName={category?.name} />
+            {selectedCategoryId === categories.find(c => c.name === 'AI 영상 제작')?.id ? (
+                <div className="space-y-20">
+                    {/* Theme 1: AI 숏폼 */}
+                    <div>
+                        <div className="flex items-center space-x-3 mb-8">
+                            <span className="text-2xl">✅</span>
+                            <h3 className="text-2xl font-bold text-gray-900">AI 숏폼 영상 제작, 김햄찌 따라하기</h3>
                         </div>
-                    );
-                })}
-            </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                            {filteredProjects
+                                .filter(p => p.description?.includes('AI 숏폼'))
+                                .map((project, index) => (
+                                    <div key={project.id} className="animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
+                                        <ProjectCard project={project} categoryName="AI 영상 제작" />
+                                    </div>
+                                ))}
+                        </div>
+                    </div>
+
+                    {/* Theme 2: 초등 AI 뮤직비디오 */}
+                    <div>
+                        <div className="flex items-center space-x-3 mb-8">
+                            <span className="text-2xl">✅</span>
+                            <h3 className="text-2xl font-bold text-gray-900">초등 AI 뮤직비디오</h3>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                            {filteredProjects
+                                .filter(p => p.description?.includes('초등 AI 뮤직비디오') || p.description?.includes('뮤직비디오 제작 프로젝트'))
+                                .map((project, index) => (
+                                    <div key={project.id} className="animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
+                                        <ProjectCard project={project} categoryName="AI 영상 제작" />
+                                    </div>
+                                ))}
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    {filteredProjects.map((project, index) => {
+                        const category = categories.find(c => c.id === project.category_id);
+                        return (
+                            <div key={project.id} className="animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
+                                <ProjectCard project={project} categoryName={category?.name} />
+                            </div>
+                        );
+                    })}
+                </div>
+            )}
 
             {/* Empty State */}
             {filteredProjects.length === 0 && (
