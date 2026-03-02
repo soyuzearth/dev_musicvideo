@@ -52,7 +52,7 @@ const Hero = () => {
                             <span className="w-1.5 h-1.5 bg-primary rounded-full"></span>
                             학생 · 청소년
                         </p>
-                        <p className="text-gray-900 items-center justify-center font-bold text-lg leading-snug">
+                        <p className="text-gray-900 font-bold text-lg leading-snug">
                             미래 역량을 키우는<br />AI 프로젝트 수업
                         </p>
                     </div>
@@ -62,7 +62,7 @@ const Hero = () => {
                             <span className="w-1.5 h-1.5 bg-purple-600 rounded-full"></span>
                             교사 · 공공기관
                         </p>
-                        <p className="text-gray-900 items-center justify-center font-bold text-lg leading-snug">
+                        <p className="text-gray-900 font-bold text-lg leading-snug">
                             실습 중심의<br />AI 리터러시 교육
                         </p>
                     </div>
@@ -72,7 +72,7 @@ const Hero = () => {
                             <span className="w-1.5 h-1.5 bg-indigo-600 rounded-full"></span>
                             기업 · 재직자 · 인재
                         </p>
-                        <p className="text-gray-900 items-center justify-center font-bold text-lg leading-snug">
+                        <p className="text-gray-900 font-bold text-lg leading-snug">
                             다음 커리어를 위한<br />AI 활용 교육
                         </p>
                     </div>
