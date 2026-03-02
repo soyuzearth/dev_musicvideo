@@ -91,7 +91,7 @@ const PortfolioGrid = () => {
             </div>
 
             {/* Grid */}
-            {selectedCategoryId === categories.find(c => c.name === 'AI 영상 제작')?.id ? (
+            {selectedCategoryId === categories.find(c => c.name.trim().includes('AI 영상 제작'))?.id ? (
                 <div className="space-y-20">
                     {/* Theme 1: AI 숏폼 */}
                     <div>
