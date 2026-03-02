@@ -13,7 +13,7 @@ const Header = ({ onContactClick }) => {
                     rel="noopener noreferrer"
                     className="bg-primary hover:bg-primary-hover text-white px-5 py-2.5 rounded-full text-sm font-medium transition-colors shadow-sm"
                 >
-                    교육 문의하기
+                    맞춤형 교육 문의하기
                 </a>
             </div>
         </header>
