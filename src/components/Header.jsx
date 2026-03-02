@@ -7,12 +7,14 @@ const Header = ({ onContactClick }) => {
                 <Link to="/" className="text-xl font-semibold text-gray-900 tracking-tight hover:text-primary transition-colors">
                     디지털라이프코칭센터
                 </Link>
-                <button
-                    onClick={onContactClick}
+                <a
+                    href="https://slashpage.com/aistory"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="bg-primary hover:bg-primary-hover text-white px-5 py-2.5 rounded-full text-sm font-medium transition-colors shadow-sm"
                 >
-                    강의 섭외 문의하기
-                </button>
+                    교육 문의하기
+                </a>
             </div>
         </header>
     );
