@@ -5,56 +5,56 @@ export const projects = [
     category: 'video-creation',
     title: "삐약이의 첫 회식",
     youtubeId: "6a2IcaS-a_4",
-    description: "AI 숏폼 영상 제작, 김햄찌 따라하기"
+    description: "✅ AI 숏폼 영상 제작, 김햄찌 따라하기"
   },
   {
     id: 102,
     category: 'video-creation',
     title: "매수 타이밍 놓친 펭모씨의 좌절",
     youtubeId: "lOJIfGYLep8",
-    description: "AI 숏폼 영상 제작, 김햄찌 따라하기"
+    description: "✅ AI 숏폼 영상 제작, 김햄찌 따라하기"
   },
   {
     id: 103,
     category: 'video-creation',
     title: "직장인의 하루",
     youtubeId: "a--zKGq14mU",
-    description: "AI 숏폼 영상 제작, 김햄찌 따라하기"
+    description: "✅ AI 숏폼 영상 제작, 김햄찌 따라하기"
   },
   {
     id: 104,
     category: 'video-creation',
     title: "홍이글의 골프 어택",
     youtubeId: "j-aiGKQzwcM",
-    description: "AI 숏폼 영상 제작, 김햄찌 따라하기"
+    description: "✅ AI 숏폼 영상 제작, 김햄찌 따라하기"
   },
   {
     id: 105,
     category: 'video-creation',
     title: "토깽이 츄의 쇼핑 대참사",
     youtubeId: "cvBjU9MBv84",
-    description: "AI 숏폼 영상 제작, 김햄찌 따라하기"
+    description: "✅ AI 숏폼 영상 제작, 김햄찌 따라하기"
   },
   {
     id: 1,
     category: 'video-creation',
     title: "꿈꾸는 우주 비행사 (AI Generated)",
     youtubeId: "dQw4w9WgXcQ",
-    description: "AI 뮤직비디오 제작 프로젝트"
+    description: "✅ 초등 AI 뮤직비디오"
   },
   {
     id: 2,
     category: 'video-creation',
     title: "미래 도시의 하루",
     youtubeId: "LXb3EKWsInQ",
-    description: "AI 뮤직비디오 제작 프로젝트"
+    description: "✅ 초등 AI 뮤직비디오"
   },
   {
     id: 3,
     category: 'video-creation',
     title: "로봇 친구와 함께",
     youtubeId: "ysz5S6P_z-E",
-    description: "AI 뮤직비디오 제작 프로젝트"
+    description: "✅ 초등 AI 뮤직비디오"
   },
 
   // --- AI 동화책 (storybook) ---

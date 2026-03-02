@@ -24,19 +24,19 @@ BEGIN
   -- 2. Clear out existing projects in this category to implement the 3-theme structure
   DELETE FROM projects WHERE category_id = v_cat_id;
 
-  -- 3. Theme 1: AI 숏폼 영상 제작, 김햄찌 따라하기 (5 videos)
+  -- 3. Theme 1: ✅ AI 숏폼 영상 제작, 김햄찌 따라하기 (5 videos)
   INSERT INTO projects (category_id, title, description, resource_type, resource_url, created_at) VALUES
-  (v_cat_id, '삐약이의 첫 회식', 'AI 숏폼 영상 제작, 김햄찌 따라하기', 'youtube', '6a2IcaS-a_4', now() - interval '5 seconds'),
-  (v_cat_id, '매수 타이밍 놓친 펭모씨의 좌절', 'AI 숏폼 영상 제작, 김햄찌 따라하기', 'youtube', 'lOJIfGYLep8', now() - interval '4 seconds'),
-  (v_cat_id, '직장인의 하루', 'AI 숏폼 영상 제작, 김햄찌 따라하기', 'youtube', 'a--zKGq14mU', now() - interval '3 seconds'),
-  (v_cat_id, '홍이글의 골프 어택', 'AI 숏폼 영상 제작, 김햄찌 따라하기', 'youtube', 'j-aiGKQzwcM', now() - interval '2 seconds'),
-  (v_cat_id, '토깽이 츄의 쇼핑 대참사', 'AI 숏폼 영상 제작, 김햄찌 따라하기', 'youtube', 'cvBjU9MBv84', now() - interval '1 second');
+  (v_cat_id, '삐약이의 첫 회식', '✅ AI 숏폼 영상 제작, 김햄찌 따라하기', 'youtube', '6a2IcaS-a_4', now() - interval '8 seconds'),
+  (v_cat_id, '매수 타이밍 놓친 펭모씨의 좌절', '✅ AI 숏폼 영상 제작, 김햄찌 따라하기', 'youtube', 'lOJIfGYLep8', now() - interval '7 seconds'),
+  (v_cat_id, '직장인의 하루', '✅ AI 숏폼 영상 제작, 김햄찌 따라하기', 'youtube', 'a--zKGq14mU', now() - interval '6 seconds'),
+  (v_cat_id, '홍이글의 골프 어택', '✅ AI 숏폼 영상 제작, 김햄찌 따라하기', 'youtube', 'j-aiGKQzwcM', now() - interval '5 seconds'),
+  (v_cat_id, '토깽이 츄의 쇼핑 대참사', '✅ AI 숏폼 영상 제작, 김햄찌 따라하기', 'youtube', 'cvBjU9MBv84', now() - interval '4 seconds');
 
-  -- 4. Theme 2: AI 뮤직비디오 (3 videos)
+  -- 4. Theme 2: ✅ 초등 AI 뮤직비디오 (3 videos)
   INSERT INTO projects (category_id, title, description, resource_type, resource_url, created_at) VALUES
-  (v_cat_id, '꿈꾸는 우주 비행사 (AI Generated)', 'AI 뮤직비디오 제작 프로젝트', 'youtube', 'dQw4w9WgXcQ', now() + interval '1 second'),
-  (v_cat_id, '미래 도시의 하루', 'AI 뮤직비디오 제작 프로젝트', 'youtube', 'LXb3EKWsInQ', now() + interval '2 seconds'),
-  (v_cat_id, '로봇 친구와 함께', 'AI 뮤직비디오 제작 프로젝트', 'youtube', 'ysz5S6P_z-E', now() + interval '3 seconds');
+  (v_cat_id, '꿈꾸는 우주 비행사 (AI Generated)', '✅ 초등 AI 뮤직비디오', 'youtube', 'dQw4w9WgXcQ', now() - interval '3 seconds'),
+  (v_cat_id, '미래 도시의 하루', '✅ 초등 AI 뮤직비디오', 'youtube', 'LXb3EKWsInQ', now() - interval '2 seconds'),
+  (v_cat_id, '로봇 친구와 함께', '✅ 초등 AI 뮤직비디오', 'youtube', 'ysz5S6P_z-E', now() - interval '1 second');
 
   -- Note: Theme 3 '초등 북트레일러 제작' is mentioned as a future/planned topic.
 
