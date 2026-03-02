@@ -1,4 +1,3 @@
-```javascript
 import React from 'react';
 
 const Hero = () => {
@@ -22,19 +21,19 @@ const Hero = () => {
                             </span>
                         </h1>
                     </div>
-                    
+
                     {/* Refined Process Flow */}
                     <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mt-10">
                         <div className="flex items-center gap-3">
                             <span className="px-5 py-2 glass-card rounded-2xl text-base font-bold text-gray-600 shadow-sm">Learning</span>
                             <span className="text-gray-300">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14m-7-7 7 7-7 7" /></svg>
                             </span>
                         </div>
                         <div className="flex items-center gap-3">
                             <span className="px-5 py-2 glass-card rounded-2xl text-base font-bold text-primary shadow-md ring-1 ring-primary/10">Project</span>
                             <span className="text-gray-300">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14m-7-7 7 7-7 7" /></svg>
                             </span>
                         </div>
                         <div>
